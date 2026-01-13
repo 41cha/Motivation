@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мій сайт</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #e3f2fd;
+            min-height: 100vh;
+        }
+
+        /* Верхня шапка */
+        .header {
+            background: #bbdefb;
+            padding: 30px 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: #1976d2;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            color: #424242;
+        }
+
+        /* Основний контейнер */
+        .main-container {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 25px;
+            padding: 25px;
+            max-width: 1800px;
+            margin: 0 auto;
+            height: calc(100vh - 130px);
+        }
+
+        /* Ліва панель */
+        .left-sidebar {
+            display: grid;
+            grid-template-rows: 320px 280px 1fr;
+            gap: 25px;
+            overflow-y: auto;
+        }
+
+        /* Права область */
+        .right-content {
+            display: flex;
+        }
+
+        /* Загальні стилі для блоків */
+        .block {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .block:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+        }
+
+        .block h2 {
+            color: #1976d2;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Блок 1: Миле фото */
+        .photo-block {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .photo-placeholder {
+            flex: 1;
+            background: #90caf9;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5em;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Блок 2: Карусель цитат */
+        .carousel-block {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .carousel {
+            background: #b3e5fc;
+            padding: 25px 20px;
+            border-radius: 12px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+        }
+
+        .quote-text {
+            font-size: 1.15em;
+            font-style: italic;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .quote-author {
+            font-size: 1em;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .carousel-controls {
+            margin-top: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .carousel-btn {
+            background: white;
+            border: 2px solid transparent;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .carousel-btn:hover {
+            background: #1976d2;
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.4);
+        }
+
+        /* Блок 3: Текстовий блок */
+        .text-block {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .text-content {
+            line-height: 1.8;
+            color: #444;
+            font-size: 1.05em;
+        }
+
+        .text-content p {
+            margin-bottom: 15px;
+        }
+
+        /* Блок 4: Чат з AI */
+        .chat-block {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .chat-messages {
+            flex: 1;
+            background: #e1f5fe;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            overflow-y: auto;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 14px 18px;
+            border-radius: 18px;
+            max-width: 70%;
+            line-height: 1.5;
+            word-wrap: break-word;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user-message {
+            background: #42a5f5;
+            color: white;
+            margin-left: auto;
+            text-align: right;
+            box-shadow: 0 3px 10px rgba(66, 165, 245, 0.3);
+        }
+
+        .ai-message {
+            background: white;
+            color: #333;
+            margin-right: auto;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 15px 22px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 1em;
+            outline: none;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .chat-input:focus {
+            border-color: #1976d2;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+        }
+
+        .send-btn {
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(25, 118, 210, 0.4);
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(25, 118, 210, 0.5);
+        }
+
+        .send-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Скролбар */
+        .left-sidebar::-webkit-scrollbar,
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .left-sidebar::-webkit-scrollbar-track,
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .left-sidebar::-webkit-scrollbar-thumb,
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(25, 118, 210, 0.3);
+            border-radius: 10px;
+        }
+
+        .left-sidebar::-webkit-scrollbar-thumb:hover,
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: rgba(25, 118, 210, 0.5);
+        }
+
+        /* Адаптивність */
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+                height: auto;
+            }
+
+            .left-sidebar {
+                grid-template-rows: auto auto auto;
+                overflow-y: visible;
+            }
+
+            .right-content {
+                min-height: 600px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .main-container {
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .block {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Верхня шапка -->
+    <div class="header">
+        <h1>Mindset Elevation</h1>
+        <p>Ваш особистий простір для натхнення та спілкування</p>
+    </div>
+
+    <!-- Основний контейнер -->
+    <div class="main-container">
+        <!-- Ліва бічна панель -->
+        <div class="left-sidebar">
+            <!-- Блок 1: Миле фото -->
+            <div class="block photo-block">
+                <h2>Фото дня</h2>
+            <div class="photo-placeholder">
+                
+            </div>
+            </div>
+
+            <!-- Блок 2: Карусель цитат -->
+            <div class="block carousel-block">
+                <h2>Мотивація</h2>
+                <div class="carousel">
+                    <div class="quote-text" id="quoteText">
+                        "Єдиний спосіб зробити чудову роботу - це любити те, що ви робите"
+                    </div>
+                    <div class="quote-author" id="quoteAuthor">
+                        — Стів Джобс
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn" onclick="prevQuote()">← Попередня</button>
+                    <button class="carousel-btn" onclick="nextQuote()">Наступна →</button>
+                </div>
+            </div>
+
+            <!-- Блок 3: Текстовий блок -->
+            <div class="block text-block">
+                <h2>Про проєкт</h2>
+                <div class="text-content">
+                    <p>Це ваш текстовий блок для розміщення будь-якої інформації про проєкт.</p>
+                    <p>Додайте опис, розкажіть про цілі та досягнення, поділіться важливими новинами.</p>
+                    <p>Цей простір повністю у вашому розпорядженні для творчості!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Права область: Чат з AI -->
+        <div class="right-content">
+            <div class="block chat-block">
+                <h2>AI Асистент</h2>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message ai-message">
+                        Привіт! Я ваш AI-асистент. Чим можу допомогти сьогодні?
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Напишіть ваше повідомлення..." autocomplete="off">
+                    <button class="send-btn" onclick="sendMessage()">Надіслати</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Карусель цитат
+        const quotes = [
+            {
+                text: "Єдиний спосіб зробити чудову роботу - це любити те, що ви робите",
+                author: "Стів Джобс"
+            },
+            {
+                text: "Успіх - це здатність рухатися від невдачі до невдачі без втрати ентузіазму",
+                author: "Вінстон Черчілль"
+            },
+            {
+                text: "Віра в себе - це перший секрет успіху",
+                author: "Ральф Емерсон"
+            },
+            {
+                text: "Не чекайте. Час ніколи не буде ідеальним",
+                author: "Наполеон Хілл"
+            },
+            {
+                text: "Майбутнє належить тим, хто вірить у красу своїх мрій",
+                author: "Елеонора Рузвельт"
+            }
+        ];
+
+        let currentQuote = 0;
+
+        function nextQuote() {
+            currentQuote = (currentQuote + 1) % quotes.length;
+            updateQuote();
+        }
+
+        function prevQuote() {
+            currentQuote = (currentQuote - 1 + quotes.length) % quotes.length;
+            updateQuote();
+        }
+
+        function updateQuote() {
+            const quoteText = document.getElementById('quoteText');
+            const quoteAuthor = document.getElementById('quoteAuthor');
+            
+            quoteText.style.opacity = '0';
+            quoteAuthor.style.opacity = '0';
+            
+            setTimeout(() => {
+                quoteText.textContent = quotes[currentQuote].text;
+                quoteAuthor.textContent = `— ${quotes[currentQuote].author}`;
+                quoteText.style.opacity = '1';
+                quoteAuthor.style.opacity = '1';
+            }, 200);
+        }
+
+        // Анімація для цитат
+        document.getElementById('quoteText').style.transition = 'opacity 0.3s ease';
+        document.getElementById('quoteAuthor').style.transition = 'opacity 0.3s ease';
+
+        // Чат функціонал
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+
+            const chatMessages = document.getElementById('chatMessages');
+            
+            // Додаємо повідомлення користувача
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user-message';
+            userMsg.textContent = message;
+            chatMessages.appendChild(userMsg);
+            
+            input.value = '';
+            
+            // Симуляція відповіді AI
+            setTimeout(() => {
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'message ai-message';
+                aiMsg.textContent = 'Дякую за ваше повідомлення! Це демо-відповідь. Тут буде інтеграція з реальним AI асистентом.';
+                chatMessages.appendChild(aiMsg);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 800);
+            
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Відправка по Enter
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Фокус на інпут при завантаженні
+        window.addEventListener('load', function() {
+            document.getElementById('chatInput').focus();
+        });
+    </script>
+</body>
+</html>
